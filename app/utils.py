@@ -37,3 +37,26 @@ def plot_ghi_ranking(data_dict):
     ranking_df = pd.DataFrame(rows).sort_values("Average GHI", ascending=False)
     fig = px.bar(ranking_df, x="Country", y="Average GHI", color="Country", title="Average GHI by Country")
     st.plotly_chart(fig, use_container_width=True)
+    
+def plot_country_map():
+    data = pd.DataFrame({
+        'Country': ['Benin', 'Sierra Leone', 'Togo'],
+        'Avg_GHI': [240.56, 201.96, 230.56],
+        'Latitude': [9.3077, 8.4606, 8.6195],
+        'Longitude': [2.3158, -11.7799, 0.8248]
+    })
+
+    fig = px.scatter_geo(
+        data,
+        lat='Latitude',
+        lon='Longitude',
+        text='Country',
+        size='Avg_GHI',
+        color='Avg_GHI',
+        color_continuous_scale='YlOrRd',
+        projection='natural earth',
+        title='Average GHI by Country',
+        hover_name='Country'
+    )
+
+    return fig

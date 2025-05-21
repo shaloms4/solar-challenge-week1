@@ -1,5 +1,6 @@
 import streamlit as st
 from utils import load_country_data, plot_boxplot, plot_ghi_ranking, get_summary_stats
+from utils import plot_country_map
 
 # --- Page Config ---
 st.set_page_config(page_title="Solar Data Dashboard", layout="wide")
@@ -37,3 +38,7 @@ if data_dict:
     plot_ghi_ranking(data_dict)
 else:
     st.warning("Please select at least one country to view data.")
+
+# Add a header or section
+st.subheader("🗺️ Solar Potential Map")
+st.plotly_chart(plot_country_map(), use_container_width=True)
