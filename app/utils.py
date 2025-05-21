@@ -25,7 +25,13 @@ def get_summary_stats(data_dict, metric):
             "Median": df[metric].median(),
             "Std Dev": df[metric].std()
         })
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    fig = px.bar(df, x="Country", y=["Mean", "Median"], 
+                 title=f"{metric} Statistical Summary",
+                 barmode="group",
+                 color_discrete_sequence=px.colors.qualitative.Set3)
+    st.plotly_chart(fig, use_container_width=True)
+    return df
 
 def plot_boxplot(data_dict, metric):
     df_all = pd.concat(data_dict.values(), ignore_index=True)
@@ -37,26 +43,30 @@ def plot_ghi_ranking(data_dict):
     ranking_df = pd.DataFrame(rows).sort_values("Average GHI", ascending=False)
     fig = px.bar(ranking_df, x="Country", y="Average GHI", color="Country", title="Average GHI by Country")
     st.plotly_chart(fig, use_container_width=True)
-    
-def plot_country_map():
-    data = pd.DataFrame({
-        'Country': ['Benin', 'Sierra Leone', 'Togo'],
-        'Avg_GHI': [240.56, 201.96, 230.56],
-        'Latitude': [9.3077, 8.4606, 8.6195],
-        'Longitude': [2.3158, -11.7799, 0.8248]
-    })
 
-    fig = px.scatter_geo(
-        data,
-        lat='Latitude',
-        lon='Longitude',
-        text='Country',
-        size='Avg_GHI',
-        color='Avg_GHI',
-        color_continuous_scale='YlOrRd',
-        projection='natural earth',
-        title='Average GHI by Country',
-        hover_name='Country'
+def plot_ghi_choropleth():
+    import pandas as pd
+    import plotly.express as px
+
+    data = {
+        "Benin": 240.56,
+        "Sierra Leone": 201.96,
+        "Togo": 230.56,
+    }
+    iso = {
+        "Benin": "BEN",
+        "Sierra Leone": "SLE",
+        "Togo": "TGO",
+    }
+
+    df = pd.DataFrame([{"Country": k, "GHI": v, "ISO": iso[k]} for k, v in data.items()])
+    fig = px.choropleth(
+        df,
+        locations="ISO",
+        color="GHI",
+        hover_name="Country",
+        color_continuous_scale="YlOrRd",
+        projection="natural earth",
+        title="Average GHI by Country"
     )
-
     return fig
