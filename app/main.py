@@ -52,24 +52,24 @@ if data_dict:
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("Distribution Analysis")
+        st.markdown("")
         with st.container():
             plot_boxplot(data_dict, selected_metric)
 
     with col2:
-        st.subheader("🗺️ Geographic Overview")
+        st.markdown("")
         with st.container():
             st.plotly_chart(plot_ghi_choropleth(), use_container_width=True)
 
     col3, col4 = st.columns(2)
     
     with col3:
-        st.subheader("🏆 Performance Ranking")
+        st.markdown("")
         with st.container():
             plot_ghi_ranking(data_dict)
 
     with col4:
-        st.subheader("📋 Statistical Summary")
+        st.markdown("")
         with st.container():
             get_summary_stats(data_dict, selected_metric)
 else:
