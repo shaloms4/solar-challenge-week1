@@ -55,34 +55,30 @@ def plot_boxplot(data_dict, metric):
                  color_discrete_sequence=COLOR_PALETTE)
     st.plotly_chart(fig, use_container_width=True)
 
-def plot_ghi_ranking(data_dict):
-    rows = [{"Country": c, "Average GHI": df["GHI"].mean()} for c, df in data_dict.items()]
-    ranking_df = pd.DataFrame(rows).sort_values("Average GHI", ascending=False)
-    fig = px.bar(ranking_df, x="Country", y="Average GHI", color="Country",
-                 title="Average GHI by Country",
+def plot_metric_ranking(data_dict, metric):
+    rows = [{"Country": c, f"Average {metric}": df[metric].mean()} for c, df in data_dict.items()]
+    ranking_df = pd.DataFrame(rows).sort_values(f"Average {metric}", ascending=False)
+    fig = px.bar(ranking_df, x="Country", y=f"Average {metric}", color="Country",
+                 title=f"Average {metric} by Country",
                  color_discrete_sequence=COLOR_PALETTE)
     st.plotly_chart(fig, use_container_width=True)
 
-def plot_ghi_choropleth():
-    data = {
-        "Benin": 240.56,
-        "Sierra Leone": 201.96,
-        "Togo": 230.56,
-    }
+def plot_metric_choropleth(data_dict, metric):
+    data = {country: df[metric].mean() for country, df in data_dict.items()}
     iso = {
         "Benin": "BEN",
         "Sierra Leone": "SLE",
         "Togo": "TGO",
     }
 
-    df = pd.DataFrame([{"Country": k, "GHI": v, "ISO": iso[k]} for k, v in data.items()])
+    df = pd.DataFrame([{"Country": k, metric: v, "ISO": iso[k]} for k, v in data.items()])
     fig = px.choropleth(
         df,
         locations="ISO",
-        color="GHI",
+        color=metric,
         hover_name="Country",
         color_continuous_scale=['#66B2FF', '#FFB366', '#66FFB2'],  # Light Blue, Light Orange, Light Green
         projection="natural earth",
-        title="Average GHI by Country"
+        title=f"Average {metric} by Country"
     )
     return fig

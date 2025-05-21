@@ -2,9 +2,9 @@ import streamlit as st
 from utils import (
     load_country_data,
     plot_boxplot,
-    plot_ghi_ranking,
+    plot_metric_ranking,
     get_summary_stats,
-    plot_ghi_choropleth,
+    plot_metric_choropleth,
 )
 
 # --- Page Config ---
@@ -59,14 +59,14 @@ if data_dict:
     with col2:
         st.markdown("")
         with st.container():
-            st.plotly_chart(plot_ghi_choropleth(), use_container_width=True)
+            st.plotly_chart(plot_metric_choropleth(data_dict, selected_metric), use_container_width=True)
 
     col3, col4 = st.columns(2)
     
     with col3:
         st.markdown("")
         with st.container():
-            plot_ghi_ranking(data_dict)
+            plot_metric_ranking(data_dict, selected_metric)
 
     with col4:
         st.markdown("")
