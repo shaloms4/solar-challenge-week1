@@ -13,6 +13,7 @@ A Streamlit-based interactive dashboard for exploring and comparing solar potent
 - **Dynamic Metric Selection**: Switch between GHI, DNI, and DHI metrics
 - **Responsive Design**: Clean, card-based layout with consistent color themes
 - **Real-time Updates**: All visualizations update automatically based on user selections
+- **Documentation**: Dashboard screenshots available in the `dashboard-screenshots` folder for reference
 
 ## Prerequisites
 
@@ -70,5 +71,13 @@ streamlit run main.py
 3. **User Interface**:
    - Design intuitive sidebar controls
    - Implement card-based layout for visualizations
+
+## Screenshots
+
+You can find screenshots of the dashboard in action in the `dashboard-screenshots` folder. These screenshots demonstrate:
+- The main dashboard layout
+- Different visualization types
+- Interactive features
+- Various metric comparisons
 
 
